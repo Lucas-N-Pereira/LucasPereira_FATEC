@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pesquisa de Livros</title>
+    <!-- Adicionando Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 30px 0;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Pesquisa de Livros</h1>
+
+    <form action="" method="GET">
+        <div class="form-group">
+            <label for="termo_busca">Buscar Livro:</label>
+            <input type="text" id="termo_busca" name="termo_busca" class="form-control">
+        </div>
+    </form>
+
+    <div id="resultado_pesquisa">
+        <!-- Aqui os resultados da pesquisa serão exibidos -->
+    </div>
+
+    <a href="../IndexG.php" class="btn btn-secondary">Voltar</a>
+</div>
+
+<script>
+    // Função para realizar a pesquisa automaticamente ao digitar
+    document.getElementById("termo_busca").addEventListener("input", function() {
+        var termo = this.value.trim(); // Obtém o valor do campo de texto e remove espaços em branco
+        if (termo.length > 0) { // Verifica se o campo não está vazio
+            // Realiza uma requisição AJAX para buscar os resultados
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        document.getElementById("resultado_pesquisa").innerHTML = xhr.responseText;
+                    } else {
+                        console.error("Erro na requisição: " + xhr.status);
+                    }
+                }
+            };
+            xhr.open("GET", "consulta1.php?termo_busca=" + termo, true);
+            xhr.send();
+        } else {
+            document.getElementById("resultado_pesquisa").innerHTML = ""; // Limpa o resultado da pesquisa se o campo estiver vazio
+        }
+    });
+</script>
+
+</body>
+</html>
